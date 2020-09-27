@@ -10,6 +10,7 @@ library(fivethirtyeight)
 
 library(ggplot2)
 
+#http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   library(grid)
   plots <- c(list(...), plotlist)
@@ -41,6 +42,8 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 head(nfl_suspensions)
 
 help(nfl_suspensions)
+
+summary(head)
 
 ggplot(nfl_suspensions)
 
@@ -113,6 +116,7 @@ print(mean(as.numeric(nfl_suspensions$games),na.rm=TRUE))
 
 print(median(as.numeric(nfl_suspensions$games),na.rm=TRUE))
 
+#https://www.tutorialspoint.com/r/r_mean_median_mode.htm
 getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
