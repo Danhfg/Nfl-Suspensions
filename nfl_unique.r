@@ -45,8 +45,6 @@ help(nfl_suspensions)
 
 summary(head)
 
-ggplot(nfl_suspensions)
-
 ns = nfl_suspensions
 
 ns$games = as.integer(ns$games)
@@ -62,8 +60,7 @@ ggplot(ns, aes(games, group = category)) +
   xlab("Number of games suspened") +
   xlim(0,20)+
   facet_wrap(~category, ncol=2, nrow=3)+
-  labs(fill="Games") +
-  title("Comparando")
+  labs(fill="Games")
 
 # Comparando todas as descri??es
 #ggplot(ns, aes(games, group = description)) + 
@@ -91,10 +88,12 @@ ggplot(nsgd, aes(games, group = description)) +
   facet_wrap(~description, ncol=2, nrow=1)+
   labs(fill="Games") 
 
+# gráfico de suspensão por ano
 countYear <- count(nfl_suspensions, 'year')
 ggplot(countYear, aes(x=year, y= freq)) + geom_line() + scale_x_continuous(breaks = seq(1940, 2015, by = 5))+
   scale_y_continuous(breaks = seq(0, 50, by = 5))
 
+# gráfico de suspensão por time
 countTeam <- count(nfl_suspensions, 'team')
 countTeam <- arrange(countTeam, desc(freq) )
 ggplot(countTeam, aes(x=team, y= freq)) + geom_bar(stat = "identity") +
@@ -104,9 +103,10 @@ ggplot(countTeam, aes(x=team, y= freq)) + geom_bar(stat = "identity") +
 countTeam2 <- head(countTeam, 4)
 count <- 0
 
+# gráfico de suspensão por time
 for (val in countTeam2$team) {
   tbl <- (as.data.frame(table(nfl_suspensions[which(nfl_suspensions$team==val), ]["year"])))
-  assign(paste("tbl", count, sep = ""), ggplot(tbl, aes(x=Var1, y= Freq)) + geom_point())
+  assign(paste("tbl", count, sep = ""), ggplot(tbl, aes(x=Var1, y= Freq))+ labs(x="Year", y="Frequence", title=val) + geom_point())
   count <- count + 1
 }
 
